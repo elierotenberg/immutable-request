@@ -25,6 +25,12 @@ module.exports = function (Request) {
     this._cache.reset();
   };
 
+  Requester.prototype.cancelAll = function (err) {
+    this._cache.forEach(function (request) {
+      return request.isPending() ? request.cancel(err) : void 0;
+    });
+  };
+
   Requester.prototype._resolve = function (path) {
     return resolve(this._base, path);
   };

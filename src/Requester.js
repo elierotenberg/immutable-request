@@ -22,6 +22,10 @@ module.exports = function(Request) {
       this._cache.reset();
     }
 
+    cancelAll(err) {
+      this._cache.forEach((request) => request.isPending() ? request.cancel(err) : void 0);
+    }
+
     _resolve(path) {
       return resolve(this._base, path);
     }

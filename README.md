@@ -37,6 +37,8 @@ requester.GET('/todoList?try=2')
 // POST requests are not cached, the request is sent twice
 requester.POST('/shuffleTodoList', { seed: 42 });
 requester.POST('/shuffleTodoList', { seed: 42 });
+// cancel all pending requests
+requester.cancelAll();
 // clear the cache and destroy references
 requester.reset();
 ```
