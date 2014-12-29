@@ -1,5 +1,5 @@
 {
-  "name": "my-starterkit",
+  "name": "immutable-request",
   "version": "0.0.0",
   "description": "",
   "main": "dist/index.js",
@@ -8,27 +8,29 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/elierotenberg/my-starterkit.git"
+    "url": "https://github.com/elierotenberg/immutable-request.git"
   },
   "author": "Elie Rotenberg <elie@rotenberg.io>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/elierotenberg/my-starterkit/issues"
+    "url": "https://github.com/elierotenberg/immutable-request/issues"
   },
-  "homepage": "https://github.com/elierotenberg/my-starterkit",
+  "homepage": "https://github.com/elierotenberg/immutable-request",
   "devDependencies": {
     "del": "^1.1.1",
     "gulp": "^3.8.10",
     "gulp-insert": "^0.4.0",
     "gulp-jshint": "^1.9.0",
     "gulp-plumber": "^0.6.6",
-    "gulp-sourcemaps": "^1.2.8",
+    "gulp-sourcemaps": "^1.3.0",
     "gulp-util": "^3.0.1",
     "gulp-6to5": "^2.0.0",
     "jshint-stylish": "^1.0.0"
   },
   "dependencies": {
-    "6to5": "^2.0.2",
-    "lodash-next": "^2.0.0"
+    "6to5": "^2.2.0",
+    "immutable": "^3.4.1",
+    "lodash-next": "^2.0.0",
+    "superagent": "^0.21.0"
   }
 }
