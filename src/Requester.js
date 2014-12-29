@@ -18,9 +18,8 @@ module.exports = function(Request) {
       this._cache = LRUCache({ max, maxAge });
     }
 
-    destroy() {
+    reset() {
       this._cache.reset();
-      this._cache = null;
     }
 
     _resolve(path) {

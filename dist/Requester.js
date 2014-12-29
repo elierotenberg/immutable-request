@@ -21,9 +21,8 @@ module.exports = function (Request) {
     this._cache = LRUCache({ max: max, maxAge: maxAge });
   };
 
-  Requester.prototype.destroy = function () {
+  Requester.prototype.reset = function () {
     this._cache.reset();
-    this._cache = null;
   };
 
   Requester.prototype._resolve = function (path) {
