@@ -5,7 +5,7 @@ Combines `superagent`, `bluebird`, `immutable` and `lru-cache` for sane isomorph
 
 ### Example
 
-```
+```js
 // Simply use the static factory
 Request.GET('http://localhost:8888/todoList')
 .then((immutableMap) => {
