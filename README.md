@@ -11,12 +11,21 @@ Request.GET('http://localhost:8888/todoList')
 .then((immutableMap) => {
   // do something with immutableMap
 })
-.catch((err) => /* handle error */);
+.catch((err) => {
+  // handle error
+});
 
-// send a POST request
-const post = Request.POST('http://localhost:8888/shuffleTodoList', { seed: 1337 });
+// send a POST request with { seed: 1337 } as its form body
+const post = Request.POST('http://localhost:8888/shuffleTodoList', { seed: 1337 }, { timeout: 10000 });
 // nevermind, abort it
 post.cancel(new Error('because reasons'));
+
+// you can specify timeout (in ms) and
+// return type ('immutable', 'json', 'object' or 'null')
+Request.GET('http://localhost:8888/todoList', { timeout: 10000, type: 'json' })
+.then((json) => {
+  // do something with json
+});
 
 // leverage automatic, clever userland caching
 const requester = new Request.Requester('http://localhost:8888', {
@@ -28,6 +37,7 @@ const requester = new Request.Requester('http://localhost:8888', {
 requester.GET('/todoList')
 .then((immutableMap) => {
   // do something with immutableMap
+  // you can access the raw json with immutableMap.json
 });
 // cache is done by full path, so querystring can be used to force recaching
 requester.GET('/todoList?try=2')

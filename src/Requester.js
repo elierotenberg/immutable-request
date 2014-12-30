@@ -1,12 +1,12 @@
 const _ = require('lodash-next');
 const { resolve } = require('url');
 const LRUCache = require('lru-cache');
+const sigmund = require('sigmund');
 
 module.exports = function(Request) {
   const DEFAULT_BASE = '';
   const DEFAULT_MAX = 5000;
   const DEFAULT_MAX_AGE = 3600000;
-  const DEFAULT_TIMEOUT = 10000;
 
   class Requester {
     constructor(base, options) {
@@ -14,7 +14,6 @@ module.exports = function(Request) {
       this._base = base || DEFAULT_BASE;
       const max = options.max || DEFAULT_MAX;
       const maxAge = options.maxAge || DEFAULT_MAX_AGE;
-      this._timeout = options.timeout || DEFAULT_TIMEOUT;
       this._cache = LRUCache({ max, maxAge });
     }
 
@@ -30,22 +29,32 @@ module.exports = function(Request) {
       return resolve(this._base, path);
     }
 
-    GET(path, timeout = null) { // Cache GET requests as much as possible
-      if(!this._cache.has(path)) {
-        this._cache.set(path, Request.GET(this._resolve(path), timeout || this._timeout));
+    GET(path, opts) { // Cache GET requests as much as possible
+      opts = opts || {};
+      _.dev(() => {
+        path.shoud.be.a.String;
+        opts.should.be.an.Object;
+      });
+      const key = sigmund({ path, opts });
+      if(!this._cache.has(key)) {
+        this._cache.set(key, Request.GET(this._resolve(path), opts));
       }
-      return this._cache.get(path);
+      return this._cache.get(key);
     }
 
-    POST(path, body = null, timeout = null) { // Never cache POST requests
-      body = body || {};
-      return Request.POST(this._resolve(path), body, timeout);
+    POST(path, body, opts) { // Never cache POST requests
+      body = body || null;
+      opts = opts || {};
+      _.dev(() => {
+        path.should.be.a.String;
+        opts.should.be.an.Object;
+      });
+      return Request.POST(this._resolve(path), body, opts);
     }
   }
 
   _.extend(Requester.prototype, {
     _base: null,
-    _timeout: null,
     _cache: null,
   });
 
