@@ -1,3 +1,4 @@
-const Request = require('./Request');
-Request.Requester = require('./Request')(Request);
-module.exports = Request;
+import Request from './Request';
+import Requester from './Requester';
+Request.Requester = Requester(Request);
+export default Request;

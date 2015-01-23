@@ -1,6 +1,5 @@
-const _ = require('lodash-next');
-const superagent = require('superagent');
-const Immutable = require('immutable');
+import superagent from 'superagent';
+import Immutable from 'immutable';
 
 const DEFAULT_TIMEOUT = 10000;
 
@@ -8,19 +7,22 @@ const ALLOWED_METHODS = ['get', 'post'];
 const ALLOWED_TYPES = ['immutable', 'json', 'object', 'null'];
 const DEFAULT_TYPE = 'immutable';
 
-function Request(method, url, body, { timeout, type }) {
-  body = body || null;
-  timeout = timeout || DEFAULT_TIMEOUT;
-  type = type || DEFAULT_TYPE;
-  _.dev(() => {
+function Request(method, url, body = {}, opts = {}) {
+  if(__DEV__) {
     method.should.be.a.String;
-    _.contains(ALLOWED_METHODS, method).should.be.ok;
+    _.contains(ALLOWED_METHODS, method).should.be.true;
     url.should.be.a.String;
-    (body === null || _.isObject(body)).should.be.ok;
-    timeout.should.be.a.Number;
+    body.should.be.an.Object;
+    opts.should.be.an.Object;
+  }
+  const timeout = opts.timeout || DEFAULT_TIMEOUT;
+  const type = opts.type || DEFAULT_TYPE;
+  if(__DEV__) {
+    timeout.should.be.an.Number;
     type.should.be.a.String;
-    _.contains(ALLOWED_TYPES, type).should.be.ok;
-  });
+    _.contains(ALLOWED_TYPES, type).should.be.true;
+  }
+
   const req = (method === 'get' ?
     superagent.get(url).accept('application/json') :
     superagent.post(url).type('json').send(body)
@@ -54,16 +56,14 @@ function Request(method, url, body, { timeout, type }) {
   });
 }
 
-_.extend(Request, {
-  GET(url, opts) {
-    opts = opts || {};
-    return new Request('get', url, null, opts);
+Object.assign(Request, {
+  GET(url, opts = {}) {
+    return new Request('get', url, {}, opts);
   },
 
-  POST(url, body, opts) {
-    opts = opts || {};
+  POST(url, body = {}, opts = {}) {
     return new Request('post', url, body, opts);
   },
 });
 
-module.exports = Request;
+export default Request;

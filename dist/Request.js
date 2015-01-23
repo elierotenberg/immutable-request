@@ -1,8 +1,24 @@
 "use strict";
 
-require("6to5/polyfill");var Promise = (global || window).Promise = require("lodash-next").Promise;var __DEV__ = process.env.NODE_ENV !== "production";var __PROD__ = !__DEV__;var __BROWSER__ = typeof window === "object";var __NODE__ = !__BROWSER__;var _ = require("lodash-next");
-var superagent = require("superagent");
-var Immutable = require("immutable");
+var _interopRequire = function (obj) {
+  return obj && (obj["default"] || obj);
+};
+
+require("6to5/polyfill");
+var _ = require("lodash");
+var should = require("should");
+var Promise = (global || window).Promise = require("bluebird");
+var __DEV__ = process.env.NODE_ENV !== "production";
+var __PROD__ = !__DEV__;
+var __BROWSER__ = typeof window === "object";
+var __NODE__ = !__BROWSER__;
+if (__DEV__) {
+  Promise.longStackTraces();
+  Error.stackTraceLimit = Infinity;
+}
+var superagent = _interopRequire(require("superagent"));
+
+var Immutable = _interopRequire(require("immutable"));
 
 var DEFAULT_TIMEOUT = 10000;
 
@@ -10,21 +26,24 @@ var ALLOWED_METHODS = ["get", "post"];
 var ALLOWED_TYPES = ["immutable", "json", "object", "null"];
 var DEFAULT_TYPE = "immutable";
 
-function Request(method, url, body, _ref) {
-  var timeout = _ref.timeout;
-  var type = _ref.type;
-  body = body || null;
-  timeout = timeout || DEFAULT_TIMEOUT;
-  type = type || DEFAULT_TYPE;
-  _.dev(function () {
+function Request(method, url) {
+  var body = arguments[2] === undefined ? {} : arguments[2];
+  var opts = arguments[3] === undefined ? {} : arguments[3];
+  if (__DEV__) {
     method.should.be.a.String;
-    _.contains(ALLOWED_METHODS, method).should.be.ok;
+    _.contains(ALLOWED_METHODS, method).should.be["true"];
     url.should.be.a.String;
-    (body === null || _.isObject(body)).should.be.ok;
-    timeout.should.be.a.Number;
+    body.should.be.an.Object;
+    opts.should.be.an.Object;
+  }
+  var timeout = opts.timeout || DEFAULT_TIMEOUT;
+  var type = opts.type || DEFAULT_TYPE;
+  if (__DEV__) {
+    timeout.should.be.an.Number;
     type.should.be.a.String;
-    _.contains(ALLOWED_TYPES, type).should.be.ok;
-  });
+    _.contains(ALLOWED_TYPES, type).should.be["true"];
+  }
+
   var req = method === "get" ? superagent.get(url).accept("application/json") : superagent.post(url).type("json").send(body);
   return new Promise(function (resolve, reject) {
     return req.end(function (err, res) {
@@ -54,14 +73,15 @@ function Request(method, url, body, _ref) {
   });
 }
 
-_.extend(Request, {
-  GET: function (url, opts) {
-    opts = opts || {};
-    return new Request("get", url, null, opts);
+Object.assign(Request, {
+  GET: function GET(url) {
+    var opts = arguments[1] === undefined ? {} : arguments[1];
+    return new Request("get", url, {}, opts);
   },
 
-  POST: function (url, body, opts) {
-    opts = opts || {};
+  POST: function POST(url) {
+    var body = arguments[1] === undefined ? {} : arguments[1];
+    var opts = arguments[2] === undefined ? {} : arguments[2];
     return new Request("post", url, body, opts);
   } });
 

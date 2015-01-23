@@ -1,20 +1,19 @@
-const _ = require('lodash-next');
-const { resolve } = require('url');
-const LRUCache = require('lru-cache');
-const sigmund = require('sigmund');
+import { resolve } from 'url';
+import LRUCache from 'lru-cache';
+import sigmund from 'sigmund';
 
-module.exports = function(Request) {
+export default (Request) => {
   const DEFAULT_BASE = '';
   const DEFAULT_MAX = 5000;
   const DEFAULT_MAX_AGE = 3600000;
 
   class Requester {
-    constructor(base, options) {
-      options = options || {};
+    constructor(base, opts = {}) {
       this._base = base || DEFAULT_BASE;
-      const max = options.max || DEFAULT_MAX;
-      const maxAge = options.maxAge || DEFAULT_MAX_AGE;
-      this._cache = LRUCache({ max, maxAge });
+      this._cache = new LRUCache({
+        max: opts.max || DEFAULT_MAX,
+        maxAge: opts.maxAge || DEFAULT_MAX_AGE,
+      });
     }
 
     reset() {
@@ -29,12 +28,11 @@ module.exports = function(Request) {
       return resolve(this._base, path);
     }
 
-    GET(path, opts) { // Cache GET requests as much as possible
-      opts = opts || {};
-      _.dev(() => {
-        path.shoud.be.a.String;
+    GET(path, opts = {}) { // Cache GET requests as much as possible
+      if(__DEV__) {
+        path.should.be.a.String;
         opts.should.be.an.Object;
-      });
+      }
       const key = sigmund({ path, opts });
       if(!this._cache.has(key)) {
         this._cache.set(key, Request.GET(this._resolve(path), opts));
@@ -42,21 +40,14 @@ module.exports = function(Request) {
       return this._cache.get(key);
     }
 
-    POST(path, body, opts) { // Never cache POST requests
-      body = body || null;
-      opts = opts || {};
-      _.dev(() => {
-        path.should.be.a.String;
+    POST(path, body = {}, opts = {}) { // Never cache POST requests
+      if(__DEV__) {
+        body.should.be.an.Object;
         opts.should.be.an.Object;
-      });
+      }
       return Request.POST(this._resolve(path), body, opts);
     }
   }
-
-  _.extend(Requester.prototype, {
-    _base: null,
-    _cache: null,
-  });
 
   return Requester;
 };
