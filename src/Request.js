@@ -5,7 +5,7 @@ const DEFAULT_TIMEOUT = 10000;
 
 const ALLOWED_METHODS = ['get', 'post'];
 const ALLOWED_TYPES = ['immutable', 'json', 'object', 'null'];
-const DEFAULT_TYPE = 'immutable';
+const DEFAULT_TYPE = 'object';
 
 function Request(method, url, body = {}, opts = {}) {
   if(__DEV__) {

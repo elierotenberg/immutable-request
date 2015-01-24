@@ -24,7 +24,7 @@ var DEFAULT_TIMEOUT = 10000;
 
 var ALLOWED_METHODS = ["get", "post"];
 var ALLOWED_TYPES = ["immutable", "json", "object", "null"];
-var DEFAULT_TYPE = "immutable";
+var DEFAULT_TYPE = "object";
 
 function Request(method, url) {
   var body = arguments[2] === undefined ? {} : arguments[2];
