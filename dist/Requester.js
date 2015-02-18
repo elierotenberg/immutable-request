@@ -1,15 +1,12 @@
 "use strict";
 
-var _prototypeProperties = function (child, staticProps, instanceProps) {
-  if (staticProps) Object.defineProperties(child, staticProps);
-  if (instanceProps) Object.defineProperties(child.prototype, instanceProps);
-};
+var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
 
-var _interopRequire = function (obj) {
-  return obj && (obj["default"] || obj);
-};
+var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
 
-require("6to5/polyfill");
+var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+
+require("babel/polyfill");
 var _ = require("lodash");
 var should = require("should");
 var Promise = (global || window).Promise = require("bluebird");
@@ -34,6 +31,8 @@ module.exports = function (Request) {
   var Requester = (function () {
     function Requester(base) {
       var opts = arguments[1] === undefined ? {} : arguments[1];
+      _classCallCheck(this, Requester);
+
       this._base = base || DEFAULT_BASE;
       this._cache = new LRUCache({
         max: opts.max || DEFAULT_MAX,
@@ -46,7 +45,6 @@ module.exports = function (Request) {
           this._cache.reset();
         },
         writable: true,
-        enumerable: true,
         configurable: true
       },
       cancelAll: {
@@ -56,15 +54,13 @@ module.exports = function (Request) {
           });
         },
         writable: true,
-        enumerable: true,
         configurable: true
       },
       _resolve: {
-        value: function Resolve(path) {
+        value: function _resolve(path) {
           return resolve(this._base, path);
         },
         writable: true,
-        enumerable: true,
         configurable: true
       },
       GET: {
@@ -82,7 +78,6 @@ module.exports = function (Request) {
           return this._cache.get(key);
         },
         writable: true,
-        enumerable: true,
         configurable: true
       },
       POST: {
@@ -97,7 +92,6 @@ module.exports = function (Request) {
           return Request.POST(this._resolve(path), body, opts);
         },
         writable: true,
-        enumerable: true,
         configurable: true
       }
     });
