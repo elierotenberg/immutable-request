@@ -35,7 +35,7 @@ export default (Request) => {
       }
       const key = sigmund({ path, opts });
       if(!this._cache.has(key)) {
-        this._cache.set(key, Request.GET(this._resolve(path), opts));
+        this._cache.set(key, Request.GET(this._resolve(path), opts)); // eslint-disable-line new-cap
       }
       return this._cache.get(key);
     }
@@ -45,7 +45,7 @@ export default (Request) => {
         body.should.be.an.Object;
         opts.should.be.an.Object;
       }
-      return Request.POST(this._resolve(path), body, opts);
+      return Request.POST(this._resolve(path), body, opts); // eslint-disable-line new-cap
     }
   }
 
