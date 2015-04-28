@@ -1,4 +1,4 @@
-import { resolve } from 'url';
+import url from 'url';
 import LRUCache from 'lru-cache';
 import sigmund from 'sigmund';
 
@@ -25,7 +25,7 @@ export default (Request) => {
     }
 
     _resolve(path) {
-      return resolve(this._base, path);
+      return url.resolve(this._base, path);
     }
 
     GET(path, opts = {}) { // Cache GET requests as much as possible
