@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "babel": "^5.1.13",
-    "bluebird": "^2.9.24",
+    "bluebird": "^2.9.25",
     "immutable": "^3.7.2",
     "lodash": "^3.7.0",
     "lru-cache": "^2.6.2",
