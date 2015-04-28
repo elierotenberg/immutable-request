@@ -1,35 +1,45 @@
-"use strict";
+'use strict';
 
-var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
+var _interopRequireDefault = function (obj) { return obj && obj.__esModule ? obj : { 'default': obj }; };
 
-require("babel/polyfill");
-var _ = require("lodash");
-var should = require("should");
-var Promise = (global || window).Promise = require("bluebird");
-var __DEV__ = process.env.NODE_ENV !== "production";
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _superagent = require('superagent');
+
+var _superagent2 = _interopRequireDefault(_superagent);
+
+var _Immutable = require('immutable');
+
+var _Immutable2 = _interopRequireDefault(_Immutable);
+
+require('babel/polyfill');
+var _ = require('lodash');
+var should = require('should');
+var Promise = (global || window).Promise = require('bluebird');
+var __DEV__ = process.env.NODE_ENV !== 'production';
 var __PROD__ = !__DEV__;
-var __BROWSER__ = typeof window === "object";
+var __BROWSER__ = typeof window === 'object';
 var __NODE__ = !__BROWSER__;
 if (__DEV__) {
   Promise.longStackTraces();
   Error.stackTraceLimit = Infinity;
 }
-var superagent = _interopRequire(require("superagent"));
-
-var Immutable = _interopRequire(require("immutable"));
 
 var DEFAULT_TIMEOUT = 10000;
 
-var ALLOWED_METHODS = ["get", "post"];
-var ALLOWED_TYPES = ["immutable", "json", "object", "null"];
-var DEFAULT_TYPE = "object";
+var ALLOWED_METHODS = ['get', 'post'];
+var ALLOWED_TYPES = ['immutable', 'json', 'object', 'null'];
+var DEFAULT_TYPE = 'object';
 
 function Request(method, url) {
   var body = arguments[2] === undefined ? {} : arguments[2];
   var opts = arguments[3] === undefined ? {} : arguments[3];
+
   if (__DEV__) {
     method.should.be.a.String;
-    _.contains(ALLOWED_METHODS, method).should.be["true"];
+    _.contains(ALLOWED_METHODS, method).should.be['true'];
     url.should.be.a.String;
     body.should.be.an.Object;
     opts.should.be.an.Object;
@@ -39,10 +49,10 @@ function Request(method, url) {
   if (__DEV__) {
     timeout.should.be.an.Number;
     type.should.be.a.String;
-    _.contains(ALLOWED_TYPES, type).should.be["true"];
+    _.contains(ALLOWED_TYPES, type).should.be['true'];
   }
 
-  var req = method === "get" ? superagent.get(url).accept("application/json") : superagent.post(url).type("json").send(body);
+  var req = method === 'get' ? _superagent2['default'].get(url).accept('application/json') : _superagent2['default'].post(url).type('json').send(body);
   return new Promise(function (resolve, reject) {
     return req.end(function (err, res) {
       if (err) {
@@ -51,21 +61,21 @@ function Request(method, url) {
       if (res.error) {
         return reject(res.error);
       }
-      if (type === "immutable") {
-        return resolve(Immutable.Map(res.body));
+      if (type === 'immutable') {
+        return resolve(_Immutable2['default'].Map(res.body)); // eslint-disable-line new-cap
       }
-      if (type === "json") {
+      if (type === 'json') {
         return resolve(res.text);
       }
-      if (type === "object") {
+      if (type === 'object') {
         return resolve(res.body);
       }
-      if (type === "null") {
+      if (type === 'null') {
         return resolve(null);
       }
-      throw new Error("Unknown type: " + type);
+      throw new Error('Unknown type: ' + type);
     });
-  }).cancellable().timeout(timeout)["catch"](Promise.TimeoutError, Promise.CancellationError, function (err) {
+  }).cancellable().timeout(timeout)['catch'](Promise.TimeoutError, Promise.CancellationError, function (err) {
     req.abort();
     throw err;
   });
@@ -74,13 +84,16 @@ function Request(method, url) {
 Object.assign(Request, {
   GET: function GET(url) {
     var opts = arguments[1] === undefined ? {} : arguments[1];
-    return new Request("get", url, {}, opts);
+
+    return new Request('get', url, {}, opts);
   },
 
   POST: function POST(url) {
     var body = arguments[1] === undefined ? {} : arguments[1];
     var opts = arguments[2] === undefined ? {} : arguments[2];
-    return new Request("post", url, body, opts);
+
+    return new Request('post', url, body, opts);
   } });
 
-module.exports = Request;
+exports['default'] = Request;
+module.exports = exports['default'];

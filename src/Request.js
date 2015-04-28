@@ -35,7 +35,7 @@ function Request(method, url, body = {}, opts = {}) {
       return reject(res.error);
     }
     if(type === 'immutable') {
-      return resolve(Immutable.Map(res.body));
+      return resolve(Immutable.Map(res.body)); // eslint-disable-line new-cap
     }
     if(type === 'json') {
       return resolve(res.text);
