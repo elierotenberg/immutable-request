@@ -10,7 +10,9 @@ Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
-var _resolve = require('url');
+var _url = require('url');
+
+var _url2 = _interopRequireDefault(_url);
 
 var _LRUCache = require('lru-cache');
 
@@ -65,7 +67,7 @@ exports['default'] = function (Request) {
     }, {
       key: '_resolve',
       value: function _resolve(path) {
-        return _resolve.resolve(this._base, path);
+        return _url2['default'].resolve(this._base, path);
       }
     }, {
       key: 'GET',
