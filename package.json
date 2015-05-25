@@ -1,6 +1,6 @@
 {
   "name": "immutable-request",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -38,6 +38,5 @@
     "should": "^6.0.3",
     "sigmund": "^1.0.1",
     "superagent": "^1.2.0"
-
   }
 }
