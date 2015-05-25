@@ -1,12 +1,14 @@
 'use strict';
 
-var _interopRequireDefault = function (obj) { return obj && obj.__esModule ? obj : { 'default': obj }; };
+var _createClass = require('babel-runtime/helpers/create-class')['default'];
 
-var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } };
+var _classCallCheck = require('babel-runtime/helpers/class-call-check')['default'];
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _Object$defineProperty = require('babel-runtime/core-js/object/define-property')['default'];
 
-Object.defineProperty(exports, '__esModule', {
+var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
+
+_Object$defineProperty(exports, '__esModule', {
   value: true
 });
 
@@ -14,15 +16,14 @@ var _url = require('url');
 
 var _url2 = _interopRequireDefault(_url);
 
-var _LRUCache = require('lru-cache');
+var _lruCache = require('lru-cache');
 
-var _LRUCache2 = _interopRequireDefault(_LRUCache);
+var _lruCache2 = _interopRequireDefault(_lruCache);
 
 var _sigmund = require('sigmund');
 
 var _sigmund2 = _interopRequireDefault(_sigmund);
 
-require('babel/polyfill');
 var _ = require('lodash');
 var should = require('should');
 var Promise = (global || window).Promise = require('bluebird');
@@ -47,7 +48,7 @@ exports['default'] = function (Request) {
       _classCallCheck(this, Requester);
 
       this._base = base || DEFAULT_BASE;
-      this._cache = new _LRUCache2['default']({
+      this._cache = new _lruCache2['default']({
         max: opts.max || DEFAULT_MAX,
         maxAge: opts.maxAge || DEFAULT_MAX_AGE });
     }
@@ -78,7 +79,7 @@ exports['default'] = function (Request) {
           path.should.be.a.String;
           opts.should.be.an.Object;
         }
-        var key = _sigmund2['default']({ path: path, opts: opts });
+        var key = (0, _sigmund2['default'])({ path: path, opts: opts });
         if (!this._cache.has(key)) {
           this._cache.set(key, Request.GET(this._resolve(path), opts)); // eslint-disable-line new-cap
         }
