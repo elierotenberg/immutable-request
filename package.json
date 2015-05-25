@@ -1,6 +1,6 @@
 {
   "name": "immutable-request",
-  "version": "0.9.0",
+  "version": "0.8.0",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -32,11 +32,11 @@
     "babel": "^5.4.7",
     "bluebird": "^2.9.26",
     "babel-runtime": "^5.4.7",
-    "immutable": "^3.7.2",
+    "immutable": "^3.7.3",
     "lodash": "^3.9.2",
-    "lru-cache": "^2.6.2",
+    "lru-cache": "^2.6.4",
     "should": "^6.0.3",
-    "sigmund": "^1.0.0",
+    "sigmund": "^1.0.1",
     "superagent": "^1.2.0"
 
   }
