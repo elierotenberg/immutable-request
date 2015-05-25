@@ -72,30 +72,38 @@ exports['default'] = function (Request) {
       }
     }, {
       key: 'GET',
+
+      // Cache GET requests as much as possible
       value: function GET(path) {
         var opts = arguments[1] === undefined ? {} : arguments[1];
-        // Cache GET requests as much as possible
+
         if (__DEV__) {
           path.should.be.a.String;
           opts.should.be.an.Object;
         }
         var key = (0, _sigmund2['default'])({ path: path, opts: opts });
         if (!this._cache.has(key)) {
-          this._cache.set(key, Request.GET(this._resolve(path), opts)); // eslint-disable-line new-cap
+          /* eslint-disable new-cap */
+          this._cache.set(key, Request.GET(this._resolve(path), opts));
+          /* eslint-enable new-cap */
         }
         return this._cache.get(key);
       }
     }, {
       key: 'POST',
+
+      // Never cache POST requests
       value: function POST(path) {
         var body = arguments[1] === undefined ? {} : arguments[1];
         var opts = arguments[2] === undefined ? {} : arguments[2];
-        // Never cache POST requests
+
         if (__DEV__) {
           body.should.be.an.Object;
           opts.should.be.an.Object;
         }
-        return Request.POST(this._resolve(path), body, opts); // eslint-disable-line new-cap
+        /* eslint-disable new-cap */
+        return Request.POST(this._resolve(path), body, opts);
+        /* eslint-enable new-cap */
       }
     }]);
 

@@ -65,7 +65,9 @@ function Request(method, url) {
         return reject(res.error);
       }
       if (type === 'immutable') {
-        return resolve(_immutable2['default'].Map(res.body)); // eslint-disable-line new-cap
+        /* eslint-disable new-cap */
+        return resolve(_immutable2['default'].Map(res.body));
+        /* eslint-enable new-cap */
       }
       if (type === 'json') {
         return resolve(res.text);

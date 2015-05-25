@@ -28,24 +28,30 @@ export default (Request) => {
       return url.resolve(this._base, path);
     }
 
-    GET(path, opts = {}) { // Cache GET requests as much as possible
+    // Cache GET requests as much as possible
+    GET(path, opts = {}) {
       if(__DEV__) {
         path.should.be.a.String;
         opts.should.be.an.Object;
       }
       const key = sigmund({ path, opts });
       if(!this._cache.has(key)) {
-        this._cache.set(key, Request.GET(this._resolve(path), opts)); // eslint-disable-line new-cap
+        /* eslint-disable new-cap */
+        this._cache.set(key, Request.GET(this._resolve(path), opts));
+        /* eslint-enable new-cap */
       }
       return this._cache.get(key);
     }
 
-    POST(path, body = {}, opts = {}) { // Never cache POST requests
+    // Never cache POST requests
+    POST(path, body = {}, opts = {}) {
       if(__DEV__) {
         body.should.be.an.Object;
         opts.should.be.an.Object;
       }
-      return Request.POST(this._resolve(path), body, opts); // eslint-disable-line new-cap
+      /* eslint-disable new-cap */
+      return Request.POST(this._resolve(path), body, opts);
+      /* eslint-enable new-cap */
     }
   }
 
