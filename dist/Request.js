@@ -1,8 +1,12 @@
 'use strict';
 
-var _interopRequireDefault = function (obj) { return obj && obj.__esModule ? obj : { 'default': obj }; };
+var _Object$defineProperty = require('babel-runtime/core-js/object/define-property')['default'];
 
-Object.defineProperty(exports, '__esModule', {
+var _Object$assign = require('babel-runtime/core-js/object/assign')['default'];
+
+var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
+
+_Object$defineProperty(exports, '__esModule', {
   value: true
 });
 
@@ -10,11 +14,10 @@ var _superagent = require('superagent');
 
 var _superagent2 = _interopRequireDefault(_superagent);
 
-var _Immutable = require('immutable');
+var _immutable = require('immutable');
 
-var _Immutable2 = _interopRequireDefault(_Immutable);
+var _immutable2 = _interopRequireDefault(_immutable);
 
-require('babel/polyfill');
 var _ = require('lodash');
 var should = require('should');
 var Promise = (global || window).Promise = require('bluebird');
@@ -62,7 +65,7 @@ function Request(method, url) {
         return reject(res.error);
       }
       if (type === 'immutable') {
-        return resolve(_Immutable2['default'].Map(res.body)); // eslint-disable-line new-cap
+        return resolve(_immutable2['default'].Map(res.body)); // eslint-disable-line new-cap
       }
       if (type === 'json') {
         return resolve(res.text);
@@ -81,7 +84,7 @@ function Request(method, url) {
   });
 }
 
-Object.assign(Request, {
+_Object$assign(Request, {
   GET: function GET(url) {
     var opts = arguments[1] === undefined ? {} : arguments[1];
 
