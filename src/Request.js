@@ -1,5 +1,9 @@
 import superagent from 'superagent';
 import Immutable from 'immutable';
+const __DEV__ = process.env.NODE_ENV === 'development';
+import _ from 'lodash';
+import 'should';
+import Promise from 'bluebird';
 
 const DEFAULT_TIMEOUT = 10000;
 

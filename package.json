@@ -1,39 +1,36 @@
 {
   "name": "immutable-request",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "description": "",
-  "main": "dist/index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "license": "MIT",
+  "author": "Elie Rotenberg <elie@rotenberg.io>",
+  "main": "src/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/elierotenberg/immutable-request.git"
   },
-  "author": "Elie Rotenberg <elie@rotenberg.io>",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/elierotenberg/immutable-request/issues"
   },
   "homepage": "https://github.com/elierotenberg/immutable-request",
+  "scripts": {
+    "test": "gulp test"
+  },
   "devDependencies": {
-    "babel-eslint": "^3.1.9",
-    "del": "^1.2.0",
-    "eslint-plugin-react": "^2.3.0",
-    "gulp": "^3.8.11",
-    "gulp-babel": "^5.1.0",
-    "gulp-eslint": "^0.12.0",
-    "gulp-insert": "^0.4.0",
-    "gulp-plumber": "^1.0.1",
-    "gulp-sourcemaps": "^1.5.2",
-    "gulp-util": "^3.0.4"
+    "babel": "^5.5.8",
+    "babel-eslint": "^3.1.15",
+    "babel-runtime": "^5.5.8",
+    "eslint": "^0.23.0",
+    "eslint-plugin-react": "^2.5.2",
+    "gulp": "^3.9.0",
+    "gulp-eslint": "^0.14.0",
+    "gulp-mocha": "^2.1.1",
+    "gulp-plumber": "^1.0.1"
   },
   "dependencies": {
-    "babel": "^5.4.7",
-    "bluebird": "^2.9.26",
-    "babel-runtime": "^5.4.7",
+    "bluebird": "^2.9.30",
     "immutable": "^3.7.3",
-    "lodash": "^3.9.2",
+    "lodash": "^3.9.3",
     "lru-cache": "^2.6.4",
     "should": "^6.0.3",
     "sigmund": "^1.0.1",

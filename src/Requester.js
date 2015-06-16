@@ -1,3 +1,5 @@
+const __DEV__ = process.env.NODE_ENV === 'development';
+import 'should';
 import url from 'url';
 import LRUCache from 'lru-cache';
 import sigmund from 'sigmund';
