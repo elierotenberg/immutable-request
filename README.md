@@ -52,3 +52,7 @@ requester.cancelAll();
 // clear the cache and destroy references
 requester.reset();
 ```
+
+### Usage
+
+This module is written in ES6/7. You will need `babel` to use it.
